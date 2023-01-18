@@ -13,12 +13,12 @@ import java.util.Random;
 // 2nd+ roll:
 // Player rolls again
 // If the sum equals the point, the player wins
-// If the sum equals 7, the player loses
+// Else if the sum equals 7, the player loses
 // Otherwise, play next round
 
 public class Craps {
     // Declare object variables
-    int dieValue1, dieValue2, point;
+    int dieValue1, dieValue2, diceSum, point;
     boolean keepRolling;
     Random randInt = new Random();
 
@@ -29,18 +29,19 @@ public class Craps {
         keepRolling = false;
     }
 
-    // Generate random numbers for dice
+    // Generate random numbers for dice and get their sum
     public void rollDice() {
         // Get a random number from 1 to 6 inclusive
         dieValue1 = randInt.nextInt(6) + 1;
         dieValue2 = randInt.nextInt(6) + 1;
+
+        diceSum = dieValue1 + dieValue2;
     }
 
     // Play a round of Craps
     public String play() {
         // Roll dice and get their sum
         rollDice();
-        int diceSum = dieValue1 + dieValue2;
 
         // First round logic
         if (!keepRolling) {
@@ -73,6 +74,7 @@ public class Craps {
         return "Continue";
     }
 
+    // Main method, runs game loop
     public static void main(String[] args) {
         Craps game = new Craps();
         System.out.println(game.play());
