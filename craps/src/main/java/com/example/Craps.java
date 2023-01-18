@@ -38,6 +38,12 @@ public class Craps {
         diceSum = dieValue1 + dieValue2;
     }
 
+    public void debug() {
+        System.out.printf("Dice: %d, %d\n", dieValue1, dieValue2);
+        System.out.println("Keep rolling: " + keepRolling);
+        System.out.println("Point: " + point);
+    }
+
     // Play a round of Craps
     public String play() {
         // Roll dice and get their sum
@@ -45,23 +51,19 @@ public class Craps {
 
         // First round logic
         if (!keepRolling) {
-            switch (diceSum) {
-                case 7:
-                case 11:
-                    return "Win";
-                case 2:
-                case 3:
-                case 12:
-                    return "Lose";
-                default:
-                    // Player has neither won nor lost, return to game loop
-                    keepRolling = true;
-                    point = diceSum;
-                    return "Continue";
+            if (diceSum == 7 || diceSum == 11) {
+                return "Win";
+            } else if (diceSum == 2 || diceSum == 3 || diceSum == 12) {
+                return "Lose";
+            } else {
+                // Player has neither won nor lost, return to game loop
+                keepRolling = true;
+                point = diceSum;
+                return "Continue";
             }
         }
 
-        // Second round onwards
+        // Second round+ logic
         if (diceSum == point) {
             keepRolling = false;
             return "Win";
@@ -78,5 +80,6 @@ public class Craps {
     public static void main(String[] args) {
         Craps game = new Craps();
         System.out.println(game.play());
+        game.debug();
     }
 }
