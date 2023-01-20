@@ -1,6 +1,8 @@
 package com.example;
 
 import java.util.Random;
+import java.util.Scanner;
+import java.lang.Character;
 
 // Craps
 
@@ -43,23 +45,29 @@ public class Craps {
         System.out.println("Keep rolling: " + keepRolling);
         System.out.println("Point: " + point);
     }
-
+    
     // Play a round of Craps
     public String play() {
         // Roll dice and get their sum
         rollDice();
+        
+        System.out.println("Rolling...");
 
         // First round logic
         if (!keepRolling) {
-            if (diceSum == 7 || diceSum == 11) {
-                return "Win";
-            } else if (diceSum == 2 || diceSum == 3 || diceSum == 12) {
-                return "Lose";
-            } else {
-                // Player has neither won nor lost, return to game loop
-                keepRolling = true;
-                point = diceSum;
-                return "Continue";
+            switch (diceSum) {
+                case 7:
+                case 11:
+                    return "Win";
+                case 2:
+                case 3:
+                case 12:
+                    return "Loss";
+                default:
+                    // Player has neither won nor lost, return to game loop
+                    keepRolling = true;
+                    point = diceSum;
+                    return "Continue";
             }
         }
 
@@ -78,8 +86,39 @@ public class Craps {
 
     // Main method, runs game loop
     public static void main(String[] args) {
-        Craps game = new Craps();
-        System.out.println(game.play());
-        game.debug();
+        // Declare craps object
+        Craps craps = new Craps();
+        Scanner scan = new Scanner(System.in);
+        
+        boolean keepPlaying = false;
+        String outcome;
+        
+        do {
+            System.out.println("_".repeat(30));
+            System.out.println("\nWELCOME TO CRAPS!");
+            System.out.println("_".repeat(30) + "\n");
+            
+            outcome = craps.play();
+            
+            if (outcome.equals("Win") || outcome.equals("Loss")) {
+                System.out.printf("Immediate %s! You rolled a %d", outcome, craps.diceSum);
+                System.out.println("\nWould you like to play another game? (y/n)");
+                
+                char answer = scan.next().charAt(0);
+                
+                if (Character.toLowerCase(answer) == 'y') {
+                    keepPlaying = true;
+                } else if (Character.toLowerCase(answer) == 'n') {
+                    keepPlaying = false;
+                }
+            } else {
+//                System.out.printf("No immediate win or loss. Point is %d.\n", craps.point);
+//                System.out.format("%s%30s", "\nNew Roll", "Outcome\n");
+//                System.out.println("_".repeat(38));
+//                while (craps.keepRolling) {
+//                    return;
+//                }
+            }
+        } while (keepPlaying);
     }
 }
