@@ -15,18 +15,19 @@ public class Craps {
 
     // Constructor to initialise variables
     public Craps() {
-        dieValue1 = 0;
-        dieValue2 = 0;
-        keepRolling = false;
+        this.dieValue1 = 0;
+        this.dieValue2 = 0;
+        this.keepRolling = false;
     }
 
     // Generate random numbers for dice and get their sum
     public void rollDice() {
         // Get a random number from 1 to 6 inclusive
-        dieValue1 = randInt.nextInt(6) + 1;
-        dieValue2 = randInt.nextInt(6) + 1;
 
-        diceSum = dieValue1 + dieValue2;
+        this.dieValue1 = randInt.nextInt(6) + 1;
+        this.dieValue2 = randInt.nextInt(6) + 1;
+
+        this.diceSum = dieValue1 + dieValue2;
     }
 
     // Play a round of Craps
@@ -47,18 +48,18 @@ public class Craps {
                     return "Loss";
                 default:
                     // Player has neither won nor lost, return to game loop
-                    keepRolling = true;
-                    point = diceSum;
+                    this.keepRolling = true;
+                    this.point = diceSum;
                     return "Continue";
             }
         }
 
         // Second round+ logic
         if (diceSum == point) {
-            keepRolling = false;
+            this.keepRolling = false;
             return "Win";
         } else if (diceSum == 7) {
-            keepRolling = false;
+            this.keepRolling = false;
             return "Loss";
         }
 
